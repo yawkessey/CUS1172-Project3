@@ -1,3 +1,6 @@
+let correctAnswered = 0;
+let questionsShown = 0;
+
 const questions = [
   {
     questionType: "true_false",
@@ -43,9 +46,13 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function handle_widget_event(e) {
+
+  // Get the action from the element that was clicked.
+  // Need one for multiple choice
   if (appState.current_view == "#intro_view") {
     if (e.target.dataset.action == "start_app") {
       // Update State (current model + state variables)
+      // Index of the current question
       appState.current_question = 0;
       appState.current_model = questions[appState.current_question];
       // process the appState, based on question type update appState.current_view
