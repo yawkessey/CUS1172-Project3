@@ -1,5 +1,5 @@
 {
-    "multiple_choice": [
+    "questions": [
         {
             "id" : 1,
             "questionType": "multiple_choice",
@@ -120,5 +120,107 @@
                 "Optical Sensor"
             ]
         }
-    ]
+    ],
+    "true_false": [
+            {
+                "id" : 11,
+                "questionType": "true_false",
+                "questionText": "Computers can program themselves.",
+                "correctAnswer": "False",
+                "options" : [
+                    "True",
+                    "False"
+                ]
+            },
+            {
+                "id" : 12,
+                "questionType": "true_false",
+                "questionText": "Java is an OOP language.",
+                "correctAnswer": "True",
+                "options" : [
+                    "True",
+                    "False"
+                ]
+            },
+            {
+                "id" : 13,
+                "questionType": "true_false",
+                "questionText": "C is an OOP language",
+                "correctAnswer": "False",
+                "options" : [
+                    "True",
+                    "False"
+                ]
+            },
+            {
+                "id" : 14,
+                "questionType": "true_false",
+                "questionText": "SQL is used to communicate with a database.",
+                "correctAnswer": "True",
+                "options" : [
+                    "True",
+                    "False"
+                ]
+            }, 
+            {
+                "id" : 15,
+                "questionType": "true_false",
+                "questionText": "HTML, CSS, and Python are the three fundamental languages for front end web development",
+                "correctAnswer": "False",
+                "options" : [
+                    "True",
+                    "False"
+                ]
+            },
+            {
+                "id" : 16,
+                "questionType": "true_false",
+                "questionText": "Pseudocode uses exact programming language syntax to represent a module in the larger program.",
+                "correctAnswer": "False",
+                "options" : [
+                    "True",
+                    "False"
+                ]
+            },
+            {
+                "id" : 17,
+                "questionType": "true_false",
+                "questionText": "Pseudocode can be used to represent algorithms of programs.",
+                "correctAnswer": "True",
+                "options" : [
+                    "True",
+                    "False"
+                ]
+            },
+            {
+                "id" : 18,
+                "questionType": "true_false",
+                "questionText": "A boolean represents true/false",
+                "correctAnswer": "True",
+                "options" : [
+                    "True",
+                    "False"
+                ]
+            },
+            {
+                "id" : 19,
+                "questionType": "true_false",
+                "questionText": "Java does not have automatic garbage collection",
+                "correctAnswer": "False",
+                "options" : [
+                    "True",
+                    "False"
+                ]
+            },
+            {
+                "id" : 20,
+                "questionType": "true_false",
+                "questionText": "A linked list is not a data structure",
+                "correctAnswer": "False",
+                "options" : [
+                    "True",
+                    "False"
+                ]
+            }
+        ]
 }
