@@ -1,0 +1,124 @@
+{
+    "multiple_choice": [
+        {
+            "id" : 1,
+            "questionType": "multiple_choice",
+            "questionText": "Which is not a programming language?",
+            "correctAnswer": "Code",
+            "options" : [
+                "Java",
+                "Python",
+                "Go",
+                "Code"
+            ]
+        },
+        {
+            "id" : 2,
+            "questionType": "multiple_choice",
+            "questionText": "Kim has just constructed her first for loop within the Java language.  Which of the following is not a required part of a for loop?",
+            "correctAnswer": "Variable",
+            "options" : [
+                "Initialization",
+                "Condition",
+                "Variable",
+                "Increment"
+            ]
+        },
+        {
+            "id" : 3,
+            "questionType": "multiple_choice",
+            "questionText": "A loop that never ends is referred to as a(n)_________.",
+            "correctAnswer": "Infinite loop",
+            "options" : [
+                "While loop",
+                "Infinite loop",
+                "Recursive loop",
+                "For loop"
+            ]
+        },
+        {
+            "id" : 4,
+            "questionType": "multiple_choice",
+            "questionText": "_______ is the process of finding errors and fixing them within a program.",
+            "correctAnswer": "Debugging",
+            "options" : [
+                "Compiling",
+                "Executing",
+                "Debugging",
+                "Scanning"
+            ]
+        }, 
+        {
+            "id" : 5,
+            "questionType": "multiple_choice",
+            "questionText": "Computer programming is _______.",
+            "correctAnswer": "Giving a computer precise instructions for what it should do.",
+            "options" : [
+                "Using advanced computer applications like Excel or Access.",
+                "An application that can run on a computer",
+                "Giving a computer precise instructions for what it should do.",
+                "Operating a machine with computerized components, such as smartphone."
+            ]
+        },
+        {
+            "id" : 6,
+            "questionType": "multiple_choice",
+            "questionText": "Which of the following is not a MAANG company?",
+            "correctAnswer": "Twilio",
+            "options" : [
+                "Meta",
+                "Netflix",
+                "Twilio",
+                "Apple"
+            ]
+        },
+        {
+            "id" : 7,
+            "questionType": "multiple_choice",
+            "questionText": "Which of the following is not an OOP concept?",
+            "correctAnswer": "Exception",
+            "options" : [
+                "Exception",
+                "Polymorphism",
+                "Encapsulation",
+                "Abstraction"
+            ]
+        },
+        {
+            "id" : 8,
+            "questionType": "multiple_choice",
+            "questionText": "Whcih feature of OOP derives the class from another class?",
+            "correctAnswer": "Inheritance",
+            "options" : [
+                "Data hiding",
+                "Encapsulation",
+                "Inheritance",
+                "Polymorphism"
+            ]
+        },
+        {
+            "id" : 9,
+            "questionType": "multiple_choice",
+            "questionText": "Which of the following OOP concept binds the code and data together and keeps them secure from the outside world?",
+            "correctAnswer": "Encapsulation",
+            "options" : [
+                "Polymorphism",
+                "Inheritance",
+                "Abstraction",
+                "Encapsulation"
+            ]
+        },
+        {
+            "id" : 10,
+            "questionType": "multiple_choice",
+            "questionText": "'OS' computer abbreviation usually means?",
+            "correctAnswer": "Operating System",
+            "options" : [
+                "Order of Significance",
+                "Open Software",
+                "Operating System",
+                "Optical Sensor"
+            ]
+        }
+    ]
+}
