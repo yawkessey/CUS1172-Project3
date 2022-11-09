@@ -1,5 +1,28 @@
 let correctAnswered = 0;
 let questionsShown = 0;
+const TOTAL_QUESTIONS = 10;
+const QUESTIONS_API = "https://my-json-server.typicode.com/yawkessey/api_spa_quiz/db";
+
+let getQuestions = async () => {
+  let response = await fetch(QUESTIONS_API);
+  let data = await response.json();
+  console.log("data", data);
+  console.log("Multiple Choice Questions", data.multiple_choice);
+  console.log("True or False Questions", data.true_false);
+  return data;
+};
+
+
+let mc_questions = getQuestions().then((data) => {
+  return data.multiple_choice;
+});
+
+
+
+// let tf_questions = getQuestions().then((data) => {
+//   return data.true_false;
+// });
+
 
 const questions = [
   {
@@ -61,8 +84,32 @@ function handle_widget_event(e) {
       // Now that the state is updated, update the view.
 
       update_view(appState);
+    } else if (e.target.dataset.action == "mc-quiz") {
+      appState.current_view = "#question_view_multiple_choice";
+      appState.current_question = 0;
+      appState.current_model = {
+        questionText: mc_questions[0].question,
+        options: mc_questions[0].options,
+        correctAnswer: mc_questions[0].answer,
+      }
+      
+      // mc_questions.then((data) => {
+      //   console.log("test", data);
+      // });
+      setQuestionView(appState);
+      update_view(appState);
+    } else if (e.target.dataset.action == "tf-quiz") {
+      appState.current_view = "#question_view_true_false";
+      appState.current_model = {
+        questionText: "The earth is round",
+        correctAnswer: "true",
+        options: ["true", "false"],
+      };
+      update_view(appState);
     }
   }
+
+
 
   // Handle the answer event.
   if (appState.current_view == "#question_view_true_false") {
@@ -138,8 +185,8 @@ function setQuestionView(appState) {
 
   if (appState.current_model.questionType == "true_false")
     appState.current_view = "#question_view_true_false";
-  else if (appState.current_model.questionType == "text_input") {
-    appState.current_view = "#question_view_text_input";
+  else if (appState.current_model.questionType == "multiple_choice") {
+    appState.current_view = "#question_view_multiple_choice";
   }
 }
 

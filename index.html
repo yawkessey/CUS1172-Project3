@@ -45,6 +45,9 @@
           <div>
             <span> Press start to begin the app</span>
             <button class="btn btn-danger float-right" data-action="{{this.action}}">{{this.action}}</button>
+            <button class="btn btn-primary" data-action="mc-quiz">Multiple Choice Quiz</button>
+            <button class="btn btn-primary" data-action="tf-quiz">True/False Quiz</button>
+
           </div>
         </div>
       </div>
@@ -57,8 +60,9 @@
         <div class="col">
           <div>
             <span style="text-align:center"> {{this.questionText}}</span>
-            <button class="btn btn-primary pull-left" data-action="answer" data-answer="{{this.options.[0]}}">{{this.options.[0]}}</button>
-            <button class="btn btn-danger float-right" data-action="answer" data-answer="{{this.options.[1]}}">{{this.options.[1]}}</button>
+            <br/>
+            <button class="btn btn-primary" data-action="answer" data-answer="{{this.options.[0]}}">{{this.options.[0]}}</button>
+            <button class="btn btn-danger" data-action="answer" data-answer="{{this.options.[1]}}">{{this.options.[1]}}</button>
           </div>
         </div>
       </div>
@@ -89,6 +93,7 @@
         <div class="col">
           <div>
             <span style="text-align:center"> {{this.questionText}}</span>
+            <br/>
             <button
               class="btn btn-primary pull-left"
               data-action="answer"
