@@ -2,26 +2,24 @@ let correctAnswered = 0;
 let questionsShown = 0;
 const TOTAL_QUESTIONS = 10;
 const QUESTIONS_API = "https://my-json-server.typicode.com/yawkessey/api_spa_quiz/db";
+let mc_questions = null;
+let tf_questions = null;
 
 let getQuestions = async () => {
   let response = await fetch(QUESTIONS_API);
   let data = await response.json();
   console.log("data", data);
+  
   console.log("Multiple Choice Questions", data.multiple_choice);
   console.log("True or False Questions", data.true_false);
+  mc_questions = data.multiple_choice;
+  tf_questions = data.true_false;
   return data;
 };
 
-
-let mc_questions = getQuestions().then((data) => {
-  return data.multiple_choice;
-});
+getQuestions();
 
 
-
-// let tf_questions = getQuestions().then((data) => {
-//   return data.true_false;
-// });
 
 
 const questions = [
@@ -85,27 +83,17 @@ function handle_widget_event(e) {
 
       update_view(appState);
     } else if (e.target.dataset.action == "mc-quiz") {
-      appState.current_view = "#question_view_multiple_choice";
       appState.current_question = 0;
-      appState.current_model = {
-        questionText: mc_questions[0].question,
-        options: mc_questions[0].options,
-        correctAnswer: mc_questions[0].answer,
-      }
-      
-      // mc_questions.then((data) => {
-      //   console.log("test", data);
-      // });
-      setQuestionView(appState);
+      appState.current_view = "#question_view_multiple_choice";
+      appState.current_model = mc_questions[appState.current_question];
       update_view(appState);
+      updateQuestion(appState);
     } else if (e.target.dataset.action == "tf-quiz") {
+      appState.current_question = 0;
       appState.current_view = "#question_view_true_false";
-      appState.current_model = {
-        questionText: "The earth is round",
-        correctAnswer: "true",
-        options: ["true", "false"],
-      };
+      appState.current_model = tf_questions[appState.current_question];
       update_view(appState);
+      updateQuestion(appState);
     }
   }
 
@@ -119,10 +107,28 @@ function handle_widget_event(e) {
         e.target.dataset.answer,
         appState.current_model
       );
+      console.log("isCorrect", isCorrect);
 
       // Update the state.
       appState.current_question = appState.current_question + 1;
-      appState.current_model = questions[appState.current_question];
+      appState.current_model = tf_questions[appState.current_question];
+      setQuestionView(appState);
+
+      // Update the view.
+      update_view(appState);
+    }
+  } else if (appState.current_view == "#question_view_multiple_choice") {
+    if (e.target.dataset.action == "answer") {
+      // Controller - implement logic.
+      isCorrect = check_user_response(
+        e.target.dataset.answer,
+        appState.current_model
+      );
+      console.log("isCorrect", isCorrect);
+
+      // Update the state.
+      appState.current_question = appState.current_question + 1;
+      appState.current_model = mc_questions[appState.current_question];
       setQuestionView(appState);
 
       // Update the view.
@@ -168,13 +174,35 @@ function check_user_response(user_answer, model) {
 }
 
 function updateQuestion(appState) {
-  if (appState.current_question < questions.length - 1) {
-    appState.current_question = appState.current_question + 1;
-    appState.current_model = questions[appState.current_question];
-  } else {
-    appState.current_question = -2;
-    appState.current_model = {};
+  if (appState.current_view == "#question_view_true_false") {
+    if (appState.current_question < tf_questions.length - 1) {
+      appState.current_question++;
+      appState.current_model = tf_questions[appState.current_question];
+      update_view(appState);
+    } else {
+      appState.current_question = -2;
+      console.log("end of quiz", appState.current_question);
+      setQuestionView(appState);
+      appState.current_model = {};
+        }
+  } else if (appState.current_view == "#question_view_multiple_choice") {
+    if (appState.current_question < mc_questions.length - 1) {
+      appState.current_question++;
+      appState.current_model = mc_questions[appState.current_question];
+    } else {
+      appState.current_question = -2;
+      console.log("end of quiz", appState.current_question);
+      setQuestionView(appState);
+      appState.current_model = {};
+    }
   }
+  // if (appState.current_question < questions.length - 1) {
+  //   appState.current_question = appState.current_question + 1;
+  //   appState.current_model = questions[appState.current_question];
+  // } else {
+  //   appState.current_question = -2;
+  //   appState.current_model = {};
+  // }
 }
 
 function setQuestionView(appState) {
@@ -183,11 +211,11 @@ function setQuestionView(appState) {
     return;
   }
 
-  if (appState.current_model.questionType == "true_false")
-    appState.current_view = "#question_view_true_false";
-  else if (appState.current_model.questionType == "multiple_choice") {
-    appState.current_view = "#question_view_multiple_choice";
-  }
+  // if (appState.current_model.questionType == "true_false")
+  //   appState.current_view = "#question_view_true_false";
+  // else if (appState.current_model.questionType == "multiple_choice") {
+  //   appState.current_view = "#question_view_multiple_choice";
+  // }
 }
 
 function update_view(appState) {
