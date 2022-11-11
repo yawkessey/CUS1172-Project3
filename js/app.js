@@ -1,15 +1,17 @@
 let correctAnswered = 0;
 let questionsShown = 0;
 const TOTAL_QUESTIONS = 10;
-const QUESTIONS_API = "https://my-json-server.typicode.com/yawkessey/api_spa_quiz/db";
+const QUESTIONS_API =
+  "https://my-json-server.typicode.com/yawkessey/api_spa_quiz/db";
 let mc_questions = null;
 let tf_questions = null;
+let startTime = null;
 
 let getQuestions = async () => {
   let response = await fetch(QUESTIONS_API);
   let data = await response.json();
   console.log("data", data);
-  
+
   console.log("Multiple Choice Questions", data.multiple_choice);
   console.log("True or False Questions", data.true_false);
   mc_questions = data.multiple_choice;
@@ -17,10 +19,18 @@ let getQuestions = async () => {
   return data;
 };
 
+let getElapsedTime = (startTime) => {
+  let endTime = new Date();
+  let timeDiff = endTime - startTime; //in ms
+  // strip the ms
+  timeDiff /= 1000;
+
+  // get seconds
+  let seconds = Math.round(timeDiff);
+  return seconds;
+};
+
 getQuestions();
-
-
-
 
 const questions = [
   {
@@ -35,7 +45,6 @@ const questions = [
     correctAnswer: "2",
     answerFieldId: "answer_to_question",
   },
-
 ];
 
 // appState, keep information about the State of the application.
@@ -66,8 +75,9 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 });
 
-function handle_widget_event(e) {
+// document.getElementById("home").addEventListener("click", location.reload())
 
+function handle_widget_event(e) {
   // Get the action from the element that was clicked.
   // Need one for multiple choice
   if (appState.current_view == "#intro_view") {
@@ -80,24 +90,23 @@ function handle_widget_event(e) {
       setQuestionView(appState);
 
       // Now that the state is updated, update the view.
-
       update_view(appState);
     } else if (e.target.dataset.action == "mc-quiz") {
+      startTime = new Date();
       appState.current_question = 0;
       appState.current_view = "#question_view_multiple_choice";
       appState.current_model = mc_questions[appState.current_question];
+      // updateQuestion(appState);
       update_view(appState);
-      updateQuestion(appState);
     } else if (e.target.dataset.action == "tf-quiz") {
+      startTime = new Date();
       appState.current_question = 0;
       appState.current_view = "#question_view_true_false";
       appState.current_model = tf_questions[appState.current_question];
+      // updateQuestion(appState);
       update_view(appState);
-      updateQuestion(appState);
     }
   }
-
-
 
   // Handle the answer event.
   if (appState.current_view == "#question_view_true_false") {
@@ -107,11 +116,11 @@ function handle_widget_event(e) {
         e.target.dataset.answer,
         appState.current_model
       );
+      if (isCorrect) {
+        correctAnswered++;
+      }
       console.log("isCorrect", isCorrect);
-
-      // Update the state.
-      appState.current_question = appState.current_question + 1;
-      appState.current_model = tf_questions[appState.current_question];
+      updateQuestion(appState);
       setQuestionView(appState);
 
       // Update the view.
@@ -124,11 +133,13 @@ function handle_widget_event(e) {
         e.target.dataset.answer,
         appState.current_model
       );
+      if (isCorrect) {
+        correctAnswered++;
+      }
       console.log("isCorrect", isCorrect);
 
-      // Update the state.
-      appState.current_question = appState.current_question + 1;
-      appState.current_model = mc_questions[appState.current_question];
+      updateQuestion(appState);
+
       setQuestionView(appState);
 
       // Update the view.
@@ -137,26 +148,28 @@ function handle_widget_event(e) {
   }
 
   // Handle answer event for  text questions.
-  if (appState.current_view == "#question_view_text_input") {
-    if (e.target.dataset.action == "submit") {
-      user_response = document.querySelector(
-        `#${appState.current_model.answerFieldId}`
-      ).value;
-      isCorrect = check_user_response(
-        e.target.dataset.answer,
-        appState.current_model
-      );
-      updateQuestion(appState);
-      //appState.current_question =   appState.current_question + 1;
-      //appState.current_model = questions[appState.current_question];
-      setQuestionView(appState);
-      update_view(appState);
-    }
+  // if (appState.current_view == "#question_view_text_input") {
+  //   if (e.target.dataset.action == "submit") {
+  //     user_response = document.querySelector(
+  //       `#${appState.current_model.answerFieldId}`
+  //     ).value;
+  //     isCorrect = check_user_response(
+  //       e.target.dataset.answer,
+  //       appState.current_model
+  //     );
+  //     updateQuestion(appState);
+  //     setQuestionView(appState);
+  //     update_view(appState);
+  //   }
+  // }
+
+  if(e.target.dataset.action == "home"){
+    location.reload()
   }
 
   // Handle answer event for  text questions.
   if (appState.current_view == "#end_view") {
-    if (e.target.dataset.action == "start_again") {
+    if (e.target.dataset.action == "start_again" ) {
       appState.current_view = "#intro_view";
       appState.current_model = {
         action: "start_app",
@@ -173,36 +186,41 @@ function check_user_response(user_answer, model) {
   return false;
 }
 
+let displayResults = () => {
+  if (correctAnswered == 0) {
+    return "You got 0% correct";
+  } else if (correctAnswered >= 1) {
+    alert(`You got ${correctAnswered}/${10} correct in ${getElapsedTime(startTime)} seconds`);
+  }
+};
+
 function updateQuestion(appState) {
   if (appState.current_view == "#question_view_true_false") {
     if (appState.current_question < tf_questions.length - 1) {
       appState.current_question++;
       appState.current_model = tf_questions[appState.current_question];
       update_view(appState);
+      console.log("current question", appState.current_question);
     } else {
+      displayResults();
       appState.current_question = -2;
-      console.log("end of quiz", appState.current_question);
       setQuestionView(appState);
       appState.current_model = {};
-        }
+    }
   } else if (appState.current_view == "#question_view_multiple_choice") {
     if (appState.current_question < mc_questions.length - 1) {
       appState.current_question++;
+      console.log("current question", appState.current_question);
       appState.current_model = mc_questions[appState.current_question];
     } else {
+      displayResults();
       appState.current_question = -2;
+      console.log("hello world")
       console.log("end of quiz", appState.current_question);
       setQuestionView(appState);
       appState.current_model = {};
     }
   }
-  // if (appState.current_question < questions.length - 1) {
-  //   appState.current_question = appState.current_question + 1;
-  //   appState.current_model = questions[appState.current_question];
-  // } else {
-  //   appState.current_question = -2;
-  //   appState.current_model = {};
-  // }
 }
 
 function setQuestionView(appState) {
@@ -210,12 +228,6 @@ function setQuestionView(appState) {
     appState.current_view = "#end_view";
     return;
   }
-
-  // if (appState.current_model.questionType == "true_false")
-  //   appState.current_view = "#question_view_true_false";
-  // else if (appState.current_model.questionType == "multiple_choice") {
-  //   appState.current_view = "#question_view_multiple_choice";
-  // }
 }
 
 function update_view(appState) {
