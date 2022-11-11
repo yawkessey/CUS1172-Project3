@@ -118,8 +118,10 @@ function handle_widget_event(e) {
       );
       if (isCorrect) {
         correctAnswered++;
+        alert("Correct!");
+      } else {
+        alert(`Not quite! The correct answer is ${appState.current_model.correctAnswer}`);
       }
-      console.log("isCorrect", isCorrect);
       updateQuestion(appState);
       setQuestionView(appState);
 
@@ -135,9 +137,10 @@ function handle_widget_event(e) {
       );
       if (isCorrect) {
         correctAnswered++;
+        alert("Correct!");
+      } else {
+        alert(`Not quite! The correct answer is ${appState.current_model.correctAnswer}`);
       }
-      console.log("isCorrect", isCorrect);
-
       updateQuestion(appState);
 
       setQuestionView(appState);
@@ -163,13 +166,13 @@ function handle_widget_event(e) {
   //   }
   // }
 
-  if(e.target.dataset.action == "home"){
-    location.reload()
+  if (e.target.dataset.action == "home") {
+    location.reload();
   }
 
   // Handle answer event for  text questions.
   if (appState.current_view == "#end_view") {
-    if (e.target.dataset.action == "start_again" ) {
+    if (e.target.dataset.action == "start_again") {
       appState.current_view = "#intro_view";
       appState.current_model = {
         action: "start_app",
@@ -188,9 +191,13 @@ function check_user_response(user_answer, model) {
 
 let displayResults = () => {
   if (correctAnswered == 0) {
-    return "You got 0% correct";
+    alert("You got 0% correct");
   } else if (correctAnswered >= 1) {
-    alert(`You got ${correctAnswered}/${10} correct in ${getElapsedTime(startTime)} seconds`);
+    alert(
+      `You got ${correctAnswered}/${10} correct in ${getElapsedTime(
+        startTime
+      )} seconds`
+    );
   }
 };
 
@@ -215,7 +222,7 @@ function updateQuestion(appState) {
     } else {
       displayResults();
       appState.current_question = -2;
-      console.log("hello world")
+      console.log("hello world");
       console.log("end of quiz", appState.current_question);
       setQuestionView(appState);
       appState.current_model = {};
