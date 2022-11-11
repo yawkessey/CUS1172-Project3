@@ -12,14 +12,14 @@
     <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
 
     <!-- Script for our application  -->
-    <!-- <link rel="stylesheet" href="spa_app.css" /> -->
+    <link rel="stylesheet" href="styles.css" />
     <script src="js/app.js"></script>
   
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-primary">
       <div class="container">
-        <a class="navbar-brand" href="#">State Management & Event Delegation Demo App</a>
+        <a class="navbar-brand" href="#">SPA Quiz</a>
       </div>
     </nav>
 
@@ -40,14 +40,14 @@
 
   <script id="intro_view" type="text/x-handlebars-template">
     <div class="container">
-      <div class="row">
-        <div class="col">
+      <div class="row" style="display: flex; justify-content: center;">
+        <div class="col home-area">
           <div>
-            <span> Press start to begin the app</span>
-            <button class="btn btn-danger float-right" data-action="{{this.action}}">{{this.action}}</button>
-            <button class="btn btn-primary" data-action="mc-quiz">Multiple Choice Quiz</button>
-            <button class="btn btn-primary" data-action="tf-quiz">True/False Quiz</button>
-
+            <h2>Select a quiz of your choice</h2>
+          </div>
+          <div>
+            <button class="btn btn-primary btn-lg" data-action="mc-quiz">Multiple Choice Quiz</button>
+            <button class="btn btn-primary btn-lg" data-action="tf-quiz">True/False Quiz</button>
           </div>
         </div>
       </div>
@@ -56,44 +56,28 @@
 
   <script id="question_view_true_false" type="text/x-handlebars-template">
     <div class="container">
-      <button type="button" class="btn btn-dark" id="home" data-action="home">Home</button>
+      <button type="button" class="btn btn-dark" id="home" data-action="home">🏠 Home</button>
       <div class="row">
-        <div class="col">
+        <div class="col tf-options">
           <div>
             <span style="text-align:center"> {{this.questionText}}</span>
             <br/>
-            <button class="btn btn-primary" data-action="answer" data-answer="{{this.options.[0]}}">{{this.options.[0]}}</button>
-            <button class="btn btn-danger" data-action="answer" data-answer="{{this.options.[1]}}">{{this.options.[1]}}</button>
+            <div class="tf-btns">
+              <button class="btn btn-primary" data-action="true">True</button>
+              <button class="btn btn-primary" data-action="false">False</button
+            </div>
           </div>
         </div>
       </div>
     </div>
   </script>
-<!-- 
-  <script id="question_view_text_input" type="text/x-handlebars-template">
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <div>
-            <span style="text-align:center"> {{this.questionText}} </span>
-            <input type="text" id="{{this.answerFieldId}}" name="answer" /><br
-            /><br />
-            <button
-              class="btn btn-danger float-right"
-              data-action="submit"
-            >Submit</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </script> -->
 
    <script id="question_view_multiple_choice" type="text/x-handlebars-template">
-    <div class="container">
-      <button type="button" class="btn btn-dark" id="home" data-action="home">Home</button>
+    <div class="container mc">
+      <button type="button" class="btn btn-dark" id="home" data-action="home">🏠 Home</button>
       <div class="row">
-        <div class="col">
-          <div>
+        <div class="col mc-section">
+          <div class="mc-options">
             <span style="text-align:center"> {{this.questionText}}</span>
             <br/>
             <button
